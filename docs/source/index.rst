@@ -10,6 +10,7 @@ Welcome to DensityX's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-   usage.md
-   model.md
-   functions.md
+   getting_started
+   example
+   model
+   functions

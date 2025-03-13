@@ -1,0 +1,484 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Example Usage &mdash; DensityX 1.2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/nbsphinx-code-cells.css?v=2aa19091" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=6efca38a"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="DensityX Model" href="model.html" />
+    <link rel="prev" title="Getting Started" href="getting_started.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            DensityX
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Example Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model.html">DensityX Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="functions.html">Functions</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">DensityX</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Example Usage</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/example.ipynb.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="Example-Usage">
+<h1>Example Usage<a class="headerlink" href="#Example-Usage" title="Link to this heading"></a></h1>
+<p>This example shows how DensityX can be used to calculate the density of multiple glass compositions.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">densityx</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load in Test Dataset</span>
+<span class="n">test_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="s2">&quot;../../tests/test-data.xlsx&quot;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># Check test_data has correct columns</span>
+<span class="n">test_data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Sample_ID</th>
+      <th>SiO2</th>
+      <th>TiO2</th>
+      <th>Al2O3</th>
+      <th>Fe2O3</th>
+      <th>FeO</th>
+      <th>MgO</th>
+      <th>CaO</th>
+      <th>Na2O</th>
+      <th>K2O</th>
+      <th>H2O</th>
+      <th>P</th>
+      <th>T</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>samp. NS-115</td>
+      <td>40.300000</td>
+      <td>0.560000</td>
+      <td>16.240000</td>
+      <td>NaN</td>
+      <td>5.590000</td>
+      <td>0.730000</td>
+      <td>18.740000</td>
+      <td>12.230000</td>
+      <td>5.220000</td>
+      <td>0</td>
+      <td>5000</td>
+      <td>1100</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>samp. NS-115</td>
+      <td>45.600000</td>
+      <td>3.630000</td>
+      <td>15.970000</td>
+      <td>NaN</td>
+      <td>9.480000</td>
+      <td>4.280000</td>
+      <td>15.680000</td>
+      <td>3.320000</td>
+      <td>0.320000</td>
+      <td>0</td>
+      <td>5000</td>
+      <td>1100</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>samp. NS-115</td>
+      <td>46.560000</td>
+      <td>2.180000</td>
+      <td>14.330000</td>
+      <td>NaN</td>
+      <td>10.620000</td>
+      <td>12.040000</td>
+      <td>10.030000</td>
+      <td>2.810000</td>
+      <td>0.640000</td>
+      <td>0</td>
+      <td>5000</td>
+      <td>1100</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>samp. NS-115</td>
+      <td>47.830000</td>
+      <td>2.280000</td>
+      <td>19.910000</td>
+      <td>NaN</td>
+      <td>7.400000</td>
+      <td>3.180000</td>
+      <td>7.340000</td>
+      <td>6.610000</td>
+      <td>3.120000</td>
+      <td>0</td>
+      <td>5000</td>
+      <td>1100</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>samp. NS-115</td>
+      <td>52.902262</td>
+      <td>0.580352</td>
+      <td>13.177704</td>
+      <td>NaN</td>
+      <td>7.022362</td>
+      <td>12.152315</td>
+      <td>11.602033</td>
+      <td>2.239217</td>
+      <td>0.323754</td>
+      <td>0</td>
+      <td>5000</td>
+      <td>1100</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Calculate Density</span>
+<span class="n">test_densities</span> <span class="o">=</span> <span class="n">densityx</span><span class="o">.</span><span class="n">Density</span><span class="p">(</span><span class="n">test_data</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Check test_densities columns</span>
+<span class="n">test_densities</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Sample_ID</th>
+      <th>SiO2</th>
+      <th>TiO2</th>
+      <th>Al2O3</th>
+      <th>Fe2O3</th>
+      <th>FeO</th>
+      <th>MgO</th>
+      <th>CaO</th>
+      <th>Na2O</th>
+      <th>K2O</th>
+      <th>...</th>
+      <th>AbsError_K2O</th>
+      <th>AbsError_MgO</th>
+      <th>AbsError_Na2O</th>
+      <th>AbsError_SiO2</th>
+      <th>AbsError_Sum</th>
+      <th>AbsError_TiO2</th>
+      <th>density_g_per_cm</th>
+      <th>density_unc_g_per_cm</th>
+      <th>density_g_per_L</th>
+      <th>uncertainty_g_per_L</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>samp. NS-115</td>
+      <td>40.300000</td>
+      <td>0.560000</td>
+      <td>16.240000</td>
+      <td>0.0</td>
+      <td>5.590000</td>
+      <td>0.730000</td>
+      <td>18.740000</td>
+      <td>12.230000</td>
+      <td>5.220000</td>
+      <td>...</td>
+      <td>0.032537</td>
+      <td>0.034532</td>
+      <td>0.074199</td>
+      <td>0.123639</td>
+      <td>0.973390</td>
+      <td>0.003063</td>
+      <td>2.639029</td>
+      <td>0.039194</td>
+      <td>2639.029401</td>
+      <td>39.193979</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>samp. NS-115</td>
+      <td>45.600000</td>
+      <td>3.630000</td>
+      <td>15.970000</td>
+      <td>0.0</td>
+      <td>9.480000</td>
+      <td>4.280000</td>
+      <td>15.680000</td>
+      <td>3.320000</td>
+      <td>0.320000</td>
+      <td>...</td>
+      <td>0.001974</td>
+      <td>0.200368</td>
+      <td>0.019934</td>
+      <td>0.138452</td>
+      <td>1.019456</td>
+      <td>0.019650</td>
+      <td>2.765265</td>
+      <td>0.044050</td>
+      <td>2765.264907</td>
+      <td>44.050046</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>samp. NS-115</td>
+      <td>46.560000</td>
+      <td>2.180000</td>
+      <td>14.330000</td>
+      <td>0.0</td>
+      <td>10.620000</td>
+      <td>12.040000</td>
+      <td>10.030000</td>
+      <td>2.810000</td>
+      <td>0.640000</td>
+      <td>...</td>
+      <td>0.003742</td>
+      <td>0.534227</td>
+      <td>0.015991</td>
+      <td>0.133987</td>
+      <td>1.152127</td>
+      <td>0.011185</td>
+      <td>2.789576</td>
+      <td>0.052490</td>
+      <td>2789.576072</td>
+      <td>52.489656</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>samp. NS-115</td>
+      <td>47.830000</td>
+      <td>2.280000</td>
+      <td>19.910000</td>
+      <td>0.0</td>
+      <td>7.400000</td>
+      <td>3.180000</td>
+      <td>7.340000</td>
+      <td>6.610000</td>
+      <td>3.120000</td>
+      <td>...</td>
+      <td>0.020074</td>
+      <td>0.155271</td>
+      <td>0.041394</td>
+      <td>0.151466</td>
+      <td>0.833385</td>
+      <td>0.012873</td>
+      <td>2.626288</td>
+      <td>0.032995</td>
+      <td>2626.287725</td>
+      <td>32.995359</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>samp. NS-115</td>
+      <td>52.902262</td>
+      <td>0.580352</td>
+      <td>13.177704</td>
+      <td>0.0</td>
+      <td>7.022362</td>
+      <td>12.152315</td>
+      <td>11.602033</td>
+      <td>2.239217</td>
+      <td>0.323754</td>
+      <td>...</td>
+      <td>0.001845</td>
+      <td>0.525458</td>
+      <td>0.012418</td>
+      <td>0.148356</td>
+      <td>1.139317</td>
+      <td>0.002902</td>
+      <td>2.707294</td>
+      <td>0.051285</td>
+      <td>2707.294231</td>
+      <td>51.285103</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 81 columns</p>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot SiO2 against Density</span>
+<span class="n">fs</span> <span class="o">=</span> <span class="mi">12</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">constrained_layout</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+
+<span class="n">sc</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">test_densities</span><span class="p">[</span><span class="s2">&quot;Norm_SiO2&quot;</span><span class="p">],</span> <span class="n">test_densities</span><span class="p">[</span><span class="s2">&quot;density_g_per_cm&quot;</span><span class="p">],</span>
+                 <span class="n">c</span><span class="o">=</span><span class="n">test_densities</span><span class="p">[</span><span class="s2">&quot;Norm_MgO&quot;</span><span class="p">],</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;Reds&quot;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">64</span><span class="p">)</span>
+
+<span class="c1"># Add colorbar</span>
+<span class="n">cbar</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">sc</span><span class="p">)</span>
+<span class="n">cbar</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="s2">&quot;MgO (wt.%)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
+
+<span class="c1"># Set axis limits</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mi">85</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mf">2.2</span><span class="p">,</span> <span class="mf">3.2</span><span class="p">)</span>
+
+<span class="c1"># Adjust ticks</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">tickdir</span><span class="o">=</span><span class="s2">&quot;in&quot;</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="n">fs</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Set labels</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;SiO$_2$ (wt.%)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Density (g/cm$^3$)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/example_4_0.png" src="_images/example_4_0.png" />
+</div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="getting_started.html" class="btn btn-neutral float-left" title="Getting Started" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="model.html" class="btn btn-neutral float-right" title="DensityX Model" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Kayla Iacovino, Christy Till, Felix Boschetty.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
