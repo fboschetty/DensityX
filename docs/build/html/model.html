@@ -1,0 +1,207 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DensityX Model &mdash; DensityX 1.2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=6efca38a"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Functions" href="functions.html" />
+    <link rel="prev" title="Usage" href="usage.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            DensityX
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">DensityX Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#thermodynamic-data-sources">Thermodynamic Data Sources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mathematical-model">Mathematical Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#melt-composition">Melt Composition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#propagating-model-uncertainties">Propagating Model Uncertainties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#references-and-further-reading">References and Further Reading</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="functions.html">Functions</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">DensityX</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">DensityX Model</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/model.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="densityx-model">
+<h1>DensityX Model<a class="headerlink" href="#densityx-model" title="Link to this heading"></a></h1>
+<p><strong>DensityX</strong> is a standalone Python package for calculating the density of silicate melts based on their major oxide compositions, pressure, and temperature. It relies on partial molar volumes of oxide components and assumes ideal mixing. The model utilises the equation of state of <span id="id1">Lange [<a class="reference internal" href="#id18" title="Rebecca A. Lange. A revised model for the density and thermal expansivity of K2O-Na2O-CaO-MgO-Al2O3-SiO2 liquids from 700 to 1900 K: extension to crustal magmatic temperatures. Contributions to Mineralogy and Petrology, 130(1):1–11, December 1997. doi:10.1007/s004100050345.">1997</a>]</span> and is calibrated for a wide range of silicate melt compositions, operating over pressures of 1–30 kbar and temperatures up to 1627°C. DensityX does not require knowledge of the melt oxygen fugacity. Further details about the model are discussed below and in <span id="id2">Iacovino and Till [<a class="reference internal" href="#id15" title="Kayla Iacovino and Christy Till. DensityX: A program for calculating the densities of hydrous magmatic liquids from 427-1,627 °C and up to 30 kbar. Volcanica, 2(1):1–10, 2018. doi:10.30909/vol.02.01.0110.">2018</a>]</span>.</p>
+<section id="thermodynamic-data-sources">
+<h2>Thermodynamic Data Sources<a class="headerlink" href="#thermodynamic-data-sources" title="Link to this heading"></a></h2>
+<p>DensityX is built upon established thermodynamic data from:</p>
+<ul class="simple">
+<li><p><strong><span id="id3">Lange and Carmichael [<a class="reference internal" href="#id17" title="Rebecca A. Lange and Ian S.E. Carmichael. Densities of Na2O-K2O-CaO-MgO-FeO-Fe2O3-Al2O3-TiO2-SiO2 liquids: New measurements and derived partial molar properties. Geochimica et Cosmochimica Acta, 51(11):2931–2946, November 1987. doi:10.1016/0016-7037(87)90368-1.">1987</a>]</span>:</strong> Partial molar volumes of silicate melt components.</p></li>
+<li><p><strong><span id="id4">Lange [<a class="reference internal" href="#id18" title="Rebecca A. Lange. A revised model for the density and thermal expansivity of K2O-Na2O-CaO-MgO-Al2O3-SiO2 liquids from 700 to 1900 K: extension to crustal magmatic temperatures. Contributions to Mineralogy and Petrology, 130(1):1–11, December 1997. doi:10.1007/s004100050345.">1997</a>]</span>:</strong> Temperature and pressure dependencies of silicate melt properties.</p></li>
+<li><p><strong><span id="id5">Kress and Carmichael [<a class="reference internal" href="#id16" title="Victor C. Kress and Ian S. E. Carmichael. The compressibility of silicate liquids containing Fe2O3 and the effect of composition, temperature, oxygen fugacity and pressure on their redox states. Contributions to Mineralogy and Petrology, 108(1-2):82–92, July 1991. doi:10.1007/BF00307328.">1991</a>]</span>:</strong> Redox effects and thermodynamic properties of Fe-bearing melts.</p></li>
+<li><p><strong><span id="id6">Ochs and Lange [<a class="reference internal" href="#id20" title="Frederick A. Ochs and Rebecca A. Lange. The Density of Hydrous Magmatic Liquids. Science, 283(5406):1314–1317, February 1999. doi:10.1126/science.283.5406.1314.">1999</a>]</span>:</strong> Effect of H₂O on melt density.</p></li>
+<li><p><strong><span id="id7">Guo <em>et al.</em> [<a class="reference internal" href="#id14" title="Xuan Guo, Rebecca A. Lange, and Yuhui Ai. Density and sound speed measurements on model basalt (An–Di–Hd) liquids at one bar: New constraints on the partial molar volume and compressibility of the FeO component. Earth and Planetary Science Letters, 388:283–292, February 2014. doi:10.1016/j.epsl.2013.12.005.">2014</a>]</span>:</strong> Updated calibration of thermodynamic parameters.</p></li>
+</ul>
+</section>
+<section id="mathematical-model">
+<h2>Mathematical Model<a class="headerlink" href="#mathematical-model" title="Link to this heading"></a></h2>
+<p>Density is calculated using the <strong>ideal mixing assumption</strong>:</p>
+<div class="math notranslate nohighlight">
+\[\rho_{\textrm{liq}}​=V_{\textrm{liq}}​\sum{X_i​ M_i​}​\]</div>
+<p>where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\rho_{\textrm{liq}}\)</span>​ is density of the silicate liquid,</p></li>
+<li><p><span class="math notranslate nohighlight">\(X_i\)</span>​ is mole fraction of oxide component <span class="math notranslate nohighlight">\(i\)</span>,</p></li>
+<li><p><span class="math notranslate nohighlight">\(M_i\)</span> is molecular weight of oxide component <span class="math notranslate nohighlight">\(i\)</span>, and</p></li>
+<li><p><span class="math notranslate nohighlight">\(V_{\textrm{liq}}\)</span>​ is total volume of the silicate liquid at a given <span class="math notranslate nohighlight">\(P\)</span> and <span class="math notranslate nohighlight">\(T\)</span>, computed as:</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[V_{\textrm{liq}} = \sum{X_i V_i}\]</div>
+<p>where <span class="math notranslate nohighlight">\(V_i\)</span>​ is the partial molar volume of each oxide component, adjusted for pressure and temperature using:</p>
+<div class="math notranslate nohighlight">
+\[V_{i}(T, P) = V_{i}(T_{\textrm{ref}}, P_{\textrm{ref}}) + dV_i dT(T−T_{\textrm{ref}}) + dV_{i}dP(P−P_{\textrm{ref}})\]</div>
+<p>where <span class="math notranslate nohighlight">\(T_{\textrm{ref}}\)</span> is the reference temperature for the molar volume, and <span class="math notranslate nohighlight">\(P_{\textrm{ref}}\)</span> is the reference pressure, often 1 bar.</p>
+<p>This equation is valid up to 30 kbar. For pressures exceeding this range, second-order pressure derivatives become significant and are not included in DensityX.</p>
+</section>
+<section id="melt-composition">
+<h2>Melt Composition<a class="headerlink" href="#melt-composition" title="Link to this heading"></a></h2>
+<p>DensityX operates in a 10-component system: SiO<sub>2</sub>-TiO<sub>2</sub>-Al<sub>2</sub>O<sub>3</sub>-Fe<sub>2</sub>O<sub>3</sub>-FeO-MgO-CaO-Na<sub>2</sub>O−K<sub>2</sub>O-H<sub>2</sub>O.
+<strong>Figure 1</strong> shows a Total-Alkali-Silica diagram showing the compositions of the calibration data.</p>
+<figure class="align-center" id="id21">
+<img alt="TAS-diagram for calibration data" src="_images/calibration_TAS.svg" />
+<figcaption>
+<p><span class="caption-text"><strong>Figure 1.</strong> Total-Alkali-Silica diagram for calibration data for studies used in DensityX. Kress1991, <span id="id8">Kress and Carmichael [<a class="reference internal" href="#id16" title="Victor C. Kress and Ian S. E. Carmichael. The compressibility of silicate liquids containing Fe2O3 and the effect of composition, temperature, oxygen fugacity and pressure on their redox states. Contributions to Mineralogy and Petrology, 108(1-2):82–92, July 1991. doi:10.1007/BF00307328.">1991</a>]</span>. Lange1997, <span id="id9">Lange [<a class="reference internal" href="#id18" title="Rebecca A. Lange. A revised model for the density and thermal expansivity of K2O-Na2O-CaO-MgO-Al2O3-SiO2 liquids from 700 to 1900 K: extension to crustal magmatic temperatures. Contributions to Mineralogy and Petrology, 130(1):1–11, December 1997. doi:10.1007/s004100050345.">1997</a>]</span>. Ochs1999, <span id="id10">Ochs and Lange [<a class="reference internal" href="#id20" title="Frederick A. Ochs and Rebecca A. Lange. The Density of Hydrous Magmatic Liquids. Science, 283(5406):1314–1317, February 1999. doi:10.1126/science.283.5406.1314.">1999</a>]</span>. Liu2006, <span id="id11">Liu [<a class="reference internal" href="#id19" title="Q. Liu. The partial molar volume of Fe2O3 in alkali silicate melts: Evidence for an average Fe3+ coordination number near five. American Mineralogist, 91(2-3):385–393, February 2006. doi:10.2138/am.2006.1902.">2006</a>]</span>. Guo2014, <span id="id12">Guo <em>et al.</em> [<a class="reference internal" href="#id14" title="Xuan Guo, Rebecca A. Lange, and Yuhui Ai. Density and sound speed measurements on model basalt (An–Di–Hd) liquids at one bar: New constraints on the partial molar volume and compressibility of the FeO component. Earth and Planetary Science Letters, 388:283–292, February 2014. doi:10.1016/j.epsl.2013.12.005.">2014</a>]</span>.</span><a class="headerlink" href="#id21" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="propagating-model-uncertainties">
+<h2>Propagating Model Uncertainties<a class="headerlink" href="#propagating-model-uncertainties" title="Link to this heading"></a></h2>
+<p>DensityX propagates the model parameter uncertainties in quadrature, where given, by assuming they are small, normally distributed and independent. The estimated uncertainty the calculated density is given as a <span class="math notranslate nohighlight">\(1\sigma\)</span> value.</p>
+</section>
+<section id="references-and-further-reading">
+<h2>References and Further Reading<a class="headerlink" href="#references-and-further-reading" title="Link to this heading"></a></h2>
+<div class="docutils container" id="id13">
+<div role="list" class="citation-list">
+<div class="citation" id="id14" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id7">1</a>,<a role="doc-backlink" href="#id12">2</a>)</span>
+<p>Xuan Guo, Rebecca A. Lange, and Yuhui Ai. Density and sound speed measurements on model basalt (An–Di–Hd) liquids at one bar: New constraints on the partial molar volume and compressibility of the FeO component. <em>Earth and Planetary Science Letters</em>, 388:283–292, February 2014. <a class="reference external" href="https://doi.org/10.1016/j.epsl.2013.12.005">doi:10.1016/j.epsl.2013.12.005</a>.</p>
+</div>
+<div class="citation" id="id15" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
+<p>Kayla Iacovino and Christy Till. DensityX: A program for calculating the densities of hydrous magmatic liquids from 427-1,627 °C and up to 30 kbar. <em>Volcanica</em>, 2(1):1–10, 2018. <a class="reference external" href="https://doi.org/10.30909/vol.02.01.0110">doi:10.30909/vol.02.01.0110</a>.</p>
+</div>
+<div class="citation" id="id16" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id5">1</a>,<a role="doc-backlink" href="#id8">2</a>)</span>
+<p>Victor C. Kress and Ian S. E. Carmichael. The compressibility of silicate liquids containing Fe2O3 and the effect of composition, temperature, oxygen fugacity and pressure on their redox states. <em>Contributions to Mineralogy and Petrology</em>, 108(1-2):82–92, July 1991. <a class="reference external" href="https://doi.org/10.1007/BF00307328">doi:10.1007/BF00307328</a>.</p>
+</div>
+<div class="citation" id="id18" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id1">1</a>,<a role="doc-backlink" href="#id4">2</a>,<a role="doc-backlink" href="#id9">3</a>)</span>
+<p>Rebecca A. Lange. A revised model for the density and thermal expansivity of K2O-Na2O-CaO-MgO-Al2O3-SiO2 liquids from 700 to 1900 K: extension to crustal magmatic temperatures. <em>Contributions to Mineralogy and Petrology</em>, 130(1):1–11, December 1997. <a class="reference external" href="https://doi.org/10.1007/s004100050345">doi:10.1007/s004100050345</a>.</p>
+</div>
+<div class="citation" id="id17" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">5</a><span class="fn-bracket">]</span></span>
+<p>Rebecca A. Lange and Ian S.E. Carmichael. Densities of Na2O-K2O-CaO-MgO-FeO-Fe2O3-Al2O3-TiO2-SiO2 liquids: New measurements and derived partial molar properties. <em>Geochimica et Cosmochimica Acta</em>, 51(11):2931–2946, November 1987. <a class="reference external" href="https://doi.org/10.1016/0016-7037(87)90368-1">doi:10.1016/0016-7037(87)90368-1</a>.</p>
+</div>
+<div class="citation" id="id19" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id11">6</a><span class="fn-bracket">]</span></span>
+<p>Q. Liu. The partial molar volume of Fe2O3 in alkali silicate melts: Evidence for an average Fe3+ coordination number near five. <em>American Mineralogist</em>, 91(2-3):385–393, February 2006. <a class="reference external" href="https://doi.org/10.2138/am.2006.1902">doi:10.2138/am.2006.1902</a>.</p>
+</div>
+<div class="citation" id="id20" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>7<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id6">1</a>,<a role="doc-backlink" href="#id10">2</a>)</span>
+<p>Frederick A. Ochs and Rebecca A. Lange. The Density of Hydrous Magmatic Liquids. <em>Science</em>, 283(5406):1314–1317, February 1999. <a class="reference external" href="https://doi.org/10.1126/science.283.5406.1314">doi:10.1126/science.283.5406.1314</a>.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="usage.html" class="btn btn-neutral float-left" title="Usage" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="functions.html" class="btn btn-neutral float-right" title="Functions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Kayla Iacovino, Christy Till, Felix Boschetty.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
