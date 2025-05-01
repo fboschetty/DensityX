@@ -302,3 +302,35 @@ class TestDensity:
         # Ensure that the result is not empty and has the correct number of rows
         assert not result.empty
         assert result.shape[0] == 1000  # Same number of rows as input
+
+
+
+@pytest.fixture
+def sample_composition():
+    """Sample composition with known density.
+    Composition is the starting material #1 composition from Dixon et al (1995, Journal of Petrology)
+    with Fe2O3/FeO numbers from experiment #7 in the same paper.
+    """
+    data = {
+        "Sample_ID": 1,
+        "SiO2":  50.08,
+        "TiO2":   1.84,
+        "Al2O3": 13.70,
+        "Fe2O3":  2.70,
+        "FeO":    9.57,
+        "MgO":    6.67,
+        "CaO":   11.50,
+        "Na2O":   2.68,
+        "K2O":    0.25,
+        "H2O":    0.00,
+        "P":    500.00,  # Pressure in bar
+        "T":   1200.00,  # Temperature in celsius
+    }
+    return pd.DataFrame(data, index=[0])
+
+def test_value(sample_composition):
+    """Test DensityX using a known comp and density."""
+    calc_density = Density(sample_composition)["density_g_per_cm3"]
+    known_density = 2.716626303
+
+    np.testing.assert_array_almost_equal(calc_density, known_density)

@@ -73,3 +73,9 @@ class ThermodynamicProperties:
             "FeO": 1723, "MgO": 1773, "CaO": 1773, "Na2O": 1773, "K2O": 1773, "H2O": 1273,
         })
         """Reference temperatures in Kelvin for thermodynamic parameters."""
+
+        self.reference_pressure = pd.Series({
+            "SiO2": 1, "TiO2": 1, "Al2O3": 1, "Fe2O3": 1,
+            "FeO": 1, "MgO": 1, "CaO": 1, "Na2O": 1, "K2O": 1, "H2O": 1,
+        })
+        """Reference pressures in bars for thermodynamic parameters."""

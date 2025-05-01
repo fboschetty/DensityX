@@ -29,7 +29,7 @@ def mole_fraction(dataframe: pd.DataFrame) -> pd.DataFrame:
 	Returns:
 		pd.DataFrame: mole fractions.
 	"""
-	from thermo_props import ThermodynamicProperties
+	from .thermo_props import ThermodynamicProperties
 
 	td_props = ThermodynamicProperties()
 
@@ -52,12 +52,12 @@ def Density(dataframe: pd.DataFrame, verbose: bool = False) -> pd.DataFrame:
 	Returns:
 		pd.DataFrame: calculated densities and uncertainty.
 	"""
-	from thermo_props import ThermodynamicProperties
+	from .thermo_props import ThermodynamicProperties
 
 	td_props = ThermodynamicProperties()
 
 	missing_columns = [
-		col for col in OXIDE_COLUMNS+["Sample_ID", "P", "T"]
+		col for col in OXIDE_COLUMNS + ["Sample_ID", "P", "T"]
 		if col not in dataframe.columns
 		]
 	if missing_columns:
@@ -78,14 +78,14 @@ def Density(dataframe: pd.DataFrame, verbose: bool = False) -> pd.DataFrame:
 	# Calculate component density.
 	numerator = mole_fraction_vals * td_props.molecular_weight
 	denominator = mole_fraction_vals.apply(
-		lambda row: td_props.molecular_weight + td_props.thermal_expansion_coefficient * (row["T_K"] - td_props.reference_temperature) + td_props.compressibility * (row["P"] - 1),
+		lambda row: td_props.molar_volume + td_props.thermal_expansion_coefficient * (row["T_K"] - td_props.reference_temperature) + td_props.compressibility * (row["P"] - td_props.reference_pressure),
 		axis=1
 		)
 	component_density = numerator[OXIDE_COLUMNS] / denominator[OXIDE_COLUMNS]
 
 	# Calculate liquid molar volumes
-	Vliq = component_density * mole_fraction_vals.apply(
-		lambda row: td_props.molar_volume + td_props.thermal_expansion_coefficient * (row["T_K"] - td_props.reference_temperature) + td_props.compressibility * (row["P"] - 1),
+	Vliq = mole_fraction_vals[OXIDE_COLUMNS] * mole_fraction_vals.apply(
+		lambda row: td_props.molar_volume + td_props.thermal_expansion_coefficient * (row["T_K"] - td_props.reference_temperature) + td_props.compressibility * (row["P"] - td_props.reference_pressure),
 		axis=1
 		)
 	Vliq["Sum"] = Vliq[OXIDE_COLUMNS].sum(axis=1)
